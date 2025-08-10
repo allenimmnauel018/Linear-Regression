@@ -4,50 +4,45 @@
 
 ## Overview
 
-This project implements a **Multiple Linear Regression** model to predict **house prices** based on various features from the `Housing.csv` dataset. It includes data preprocessing, feature engineering, outlier handling, scaling, model training, evaluation, and visualization.
+This project uses multiple linear regression to predict house prices from the `Housing.csv` dataset. The workflow includes data loading, feature engineering, outlier removal, encoding, scaling, correlation analysis, model training, evaluation, and visualization.
 
 ## Steps Performed
 
 ### 1. Data Loading
 
-* The dataset `Housing.csv` was loaded using **pandas**.
+* Loaded the dataset `Housing.csv` using **pandas**.
 
 ### 2. Feature Engineering
 
-* **`area_per_room`**: Calculated as `area / (bedrooms + bathrooms)`, avoiding division by zero.
+* **`area_per_room`**: Calculated as `area / (bedrooms + bathrooms)`, handling division by zero.
 * **`area_squared`**: Square of the `area` column to capture non-linear effects.
 
 ### 3. Outlier Removal
 
 * Used **Interquartile Range (IQR)** to remove outliers in the `price` column:
+  - Calculated Q1 (25th percentile) and Q3 (75th percentile).
+  - Computed IQR = Q3 - Q1.
+  - Kept rows where `price` is within `[Q1 - 1.5*IQR, Q3 + 1.5*IQR]`.
 
-  ```
-  Q1 = 25th percentile
-  Q3 = 75th percentile
-  IQR = Q3 - Q1
-  price kept within [Q1 - 1.5*IQR, Q3 + 1.5*IQR]
-  ```
+### 4. Encoding
 
-### 4. Encoding & Scaling
-
-* Converted categorical variables into dummy variables with `pd.get_dummies()` and `drop_first=True` to avoid multicollinearity.
-* Standardized features using **StandardScaler** from `sklearn.preprocessing`.
+* Converted categorical variables into dummy variables using `pd.get_dummies()` with `drop_first=True`.
 
 ### 5. Correlation Analysis
 
 * Created a heatmap using **Seaborn** to visualize correlations between features and the target (`price`).
 
-### 6. Model Training
+### 6. Train/Test Split & Scaling
 
-* Split data into **80% training** and **20% testing** sets.
+* Split data into **80% training** and **20% testing** sets using `train_test_split`.
+* Standardized features **after splitting** using `StandardScaler` from `sklearn.preprocessing` to avoid data leakage.
+
+### 7. Model Training & Evaluation
+
 * Trained a **Linear Regression** model using `sklearn.linear_model.LinearRegression`.
-
-### 7. Model Evaluation
-
-* **Metrics Used:**
-
-  * **Mean Squared Error (MSE)**: Measures average squared difference between predicted and actual values.
-  * **R² Score**: Proportion of variance explained by the model.
+* Evaluated model performance using:
+  - **Mean Squared Error (MSE)**
+  - **R² Score**
 * Visualized **Actual vs Predicted Prices** with a scatter plot.
 
 ## Results
@@ -63,18 +58,18 @@ This project implements a **Multiple Linear Regression** model to predict **hous
 ## Technologies Used
 
 * **Python**
-* **Pandas, NumPy** (Data handling)
-* **Matplotlib, Seaborn** (Visualization)
-* **Scikit-learn** (Preprocessing, Modeling, Evaluation)
+* **pandas** (Data handling)
+* **matplotlib, seaborn** (Visualization)
+* **scikit-learn** (Preprocessing, Modeling, Evaluation)
 
 ## How to Run
 
 1. Place `Housing.csv` in the same directory as `Task-3.ipynb`.
 2. Run all cells in the notebook.
-3. Check printed metrics and plots.
+3. Review the printed metrics and generated plots.
 
 ---
 
-## 👨‍💻 Author
+## Author
 
-Jenish Allen Immanuel J
+Jenish Allen Immanuel 💙
